@@ -23,24 +23,24 @@ window.addEventListener('DOMContentLoaded', ()=>{
             updateStatus(`opening Capture result: ${result}`)
         })
         .catch(err => {
+            var finalErr = err.error || err
             var val;
             // error code to watch for to check if the Companion service is running
-            if(err === SocketMobile.SktErrors.ESKT_UNABLEOPENDEVICE){
-                val='not able to connect to the service, is it running?'
+            if(finalErr === SocketMobile.SktErrors.ESKT_UNABLEOPENDEVICE){
+                val='not able to connect to the service, is it running?' + ` ${finalErr}`
                 console.log('no able to connect to the service, is it running?');
             }
             else {
-                val = `opening Capture error: ${err}`;
+                val = `opening Capture error: ${finalErr}`;
             }
             console.log(val)
-            updateStatus(val, err)
+            updateStatus(val, finalErr)
         });
 })
 
 const updateStatus = (val, err) =>{
     var color = err ? 'red' : 'green'
-    var innerText = err ? `${val} ${err}` : val
-    document.getElementById('status').innerText = innerText
+    document.getElementById('status').innerText = val
     document.getElementById('status').style.color = color
 }
 
