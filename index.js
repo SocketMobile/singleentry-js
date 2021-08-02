@@ -1,8 +1,10 @@
 //Remove below line and add the values for each key directly 
 //if you do not want store them in credentials.js
 const {appId, developerId, appKey} = CREDENTIALS;
-let capture, devices, data;
+let capture, devices;
+let decodedData = [];
 let deviceMap = {}
+let dataId = 10;
 
 let appInfo = {
     appId,
@@ -50,9 +52,7 @@ const onCaptureEvent = (e, handle) => {
                     updateDevices()
                 })
                 .catch(err => {
-                    alert(err)
-                    myLogger.log(err);
-                    setStatus(`error opening a device: ${err}`);
+                    updateStatus(`error opening a device: ${err}`);
                 });
             break;
         // **********************************
@@ -100,24 +100,13 @@ const onCaptureEvent = (e, handle) => {
         //  }
         // **********************************
         case CaptureEventIds.DecodedData:
-            console.log('DECODED DATA')
-        //   const deviceSource = devices.find(d => d.handle === handle);
-        //   if (deviceSource) {
-        //     `no matching devices found for ${e.value.name}`(`decoded data from: ${deviceSource.name}`);
-        //   }
-        //   if (lastDecodedData.length) {
-            // setDecodedDataList(prevList => {
-            //   const newDecodedData = {...lastDecodedData};
-            //   newDecodedData.id = dataId++;
-            //   return [newDecodedData, ...prevList];
-            // });
-        //   }
-        //   lastDecodedData = {
-        //     data: arrayToString(e.value.data),
-        //     length: e.value.data.length,
-        //     name: e.value.name,
-        //   };
-        //   setDecodedData(lastDecodedData);
+            const deviceSource = devices.find(d => d.handle === handle);
+            
+            if (!deviceSource) {
+                updateStatus(`no matching devices found for ${e.value.name}`)
+            }
+            decodedData.push({id: dataId, name: e.value.name, data: String.fromCharCode.apply(null, e.value.data)})      
+            updateData()
           break;
       }
 }
@@ -175,10 +164,18 @@ const updateDevices = () =>{
 }
 
 const onClear = () => {
-    data = []
-    updateData()
+    dataId = 10
+    decodedData = []
+    document.getElementById('data-list').innerHTML = ""
 }
 
 const updateData = () => {
-
+    dataId++
+    var list = document.getElementById('data-list')
+    list.innerHTML = ""
+    for (var i = 0; i < decodedData.length; ++i){
+        var l = document.createElement("LI")
+        l.innerText = `${decodedData[i].id}. ${decodedData[i].name}: ${decodedData[i].data}`
+        list.appendChild(l)
+    }
 }
