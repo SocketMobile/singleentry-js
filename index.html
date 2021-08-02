@@ -10,7 +10,7 @@
         <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="">
+        <link rel="stylesheet" href="styles.css">
         <script type='module' src='https://socketimagescdn.azureedge.net/cdn/scripts/captureJs-1.0.5.6.js'></script>
         <!--REMOVE CREDENTIALS.JS REFERENCE IF YOU ARE NOT STORING YOUR CREDENTIALS OUTSIDE OF YOUR INDEX.JS PAGE-->
         <script src="credentials.js"></script>
@@ -18,10 +18,16 @@
     </head>
     <body>
         <h3><span>Status: </span><span id="status">Connecting...</span></h3>
-        <form>
-            Current Scan: <input id="decoded-data"/>
-        </form>
-        <p>Recent scans</p>
+        <h3>Devices</h3>
+        <table id="devices">
+            <tr>
+                <th>Name</th>
+                <th>GUID</th>
+            </tr>
+        </table>
+        <p id="device-warning">NO DEVICES AVAILABLE</p>
+        Current Scan: <input id="decoded-data"/>
+        <h3>Recent scans</h3>
         <ul id="data-list">
 
         </ul>
