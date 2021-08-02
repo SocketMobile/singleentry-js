@@ -2,6 +2,7 @@
 //if you do not want store them in credentials.js
 const {appId, developerId, appKey} = CREDENTIALS;
 let capture, devices, data;
+let deviceMap = {}
 
 let appInfo = {
     appId,
@@ -37,12 +38,15 @@ const onCaptureEvent = (e, handle) => {
                 .then(result => {
                     updateStatus(`result of opening ${name} : ${result}`);
                     devices = devices || []
-                    devices.push({
-                        guid,
-                        name,
-                        handle: newDevice.clientOrDeviceHandle,
-                        device: newDevice,
-                    });
+                    if (!deviceMap[name]){
+                        devices.push({
+                            guid,
+                            name,
+                            handle: newDevice.clientOrDeviceHandle,
+                            device: newDevice,
+                        });
+                        deviceMap[name] = true
+                    }
                     updateDevices()
                 })
                 .catch(err => {
@@ -65,21 +69,21 @@ const onCaptureEvent = (e, handle) => {
         //  }
         // **********************************
         case CaptureEventIds.DeviceRemoval:
-            console.log('DEVICE REMOVAL')
-          const removeDevice = devices.find(d => d.guid === e.value.guid);
-        //   if (!removeDevice) {
-        //     updateStatus(`no matching devices found for ${e.value.name}`)
-        //     return;
-        //   }
-        //   myLogger.log('removeDevice: ', removeDevice.name);
-        //   removeDevice.device
-        //     .close()
-        //     .then(result => {
-        //       updateStatus(`result of closing ${removeDevice.name}: ${result}`);
-        //     })
-        //     .catch(err => {
-        //       updateStatus(`error closing a device: ${err}`, err);
-        //     });
+            const removeDevice = devices.find(d => d.guid === e.value.guid);
+            if (!removeDevice) {
+                updateStatus(`no matching devices found for ${e.value.name}`)
+                return;
+            }
+            removeDevice.device
+                .close()
+                .then(result => {
+                    updateStatus(`result of closing ${removeDevice.name}: ${result}`);
+                    devices = devices.filter(x=>x.guid !== removeDevice.guid)
+                    updateDevices()
+                })
+                .catch(err => {
+                    updateStatus(`error closing a device: ${err}`, err);
+                });
           break;
         // **********************************
         // Decoded Data
@@ -162,6 +166,11 @@ const updateDevices = () =>{
        var cell2 = row.insertCell(1);
        cell1.innerText = devices[i].name
        cell2.innerText = devices[i].guid
+   }
+   if (devices.length > 0){
+       document.getElementById("device-warning").style.visibility = 'hidden'
+   } else {
+       document.getElementById("device-warning").style.visibility = 'visible'
    }
 }
 
