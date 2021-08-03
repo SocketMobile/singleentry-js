@@ -12,9 +12,10 @@ The connection state of the Socket Mobile device is shown in a status field at t
 
 ## Install
 
-You shouldn't need to install anything in order to use this boilerplate. As long as you have the Socket Mobile Companion application running on a connected device and are able to connect the scanner to that device you should be able to connect your scanner to the app.
+You shouldn't need to install anything in order to use this boilerplate. However, if you want to temporarily host your app securely, you can install `ngrok` and follow the directions from this blog post (link to my blog post about using SimpleHTTPServer and ngrok).
 
 ## Usage
+To run web app on your laptop, connect an android device to your laptop so you can use `adb`. More in a moment. Then, use the Socket Mobile Companion app to connect your scanner to your attached device. Once you have successfully connected your scanner to your device, configure your credentials for your app (see below) and then in your terminal, in the project root run `adb forward tcp:18481 tcp:18481`. 
 
 The boilerplate HTML references the file `credentials.js`. The `.gitignore` file ignores this file as it is meant to act as an environment variable file, protecting your credentials from being exposed in a public GitHub repository. In this file is where you are to include your developerId, appKey and appId. See an example `credentials.js` file below.
 
