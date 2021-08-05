@@ -167,6 +167,7 @@ const onClear = () => {
     dataId = 10
     decodedData = []
     document.getElementById('data-list').innerHTML = ""
+    document.getElementById('decoded-data').value = ""
 }
 
 const updateData = () => {
@@ -175,7 +176,11 @@ const updateData = () => {
     list.innerHTML = ""
     for (var i = 0; i < decodedData.length; ++i){
         var l = document.createElement("LI")
-        l.innerText = `${decodedData[i].id}. ${decodedData[i].name}: ${decodedData[i].data}`
+        l.innerText = `${decodedData[i].name.toUpperCase()} (${decodedData[i].data.length}): ${decodedData[i].data}`
         list.appendChild(l)
+        if (i === decodedData.length - 1){
+            //assign scanned value to input
+            document.getElementById('decoded-data').value = l.innerText
+        }
     }
 }

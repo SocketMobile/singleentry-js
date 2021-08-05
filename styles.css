@@ -18,3 +18,7 @@ table {
       display: block;
       margin: auto;
   }
+
+  input{
+    width: 400px;
+  }
