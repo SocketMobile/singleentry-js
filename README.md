@@ -76,11 +76,28 @@ window.addEventListener('DOMContentLoaded', ()=>{
 })
 ```
 
-Finally, `onCaptureEvent` is used to handle the data that comes back from a successfully opened capture instance.
+Finally, `onCaptureEvent` is used to handle the data that comes back from a successfully opened capture instance and apply three conditionals; detecting devices, removing devices and processing scanned data.
 
 ```
 const onCaptureEvent = (e, handle) => {
-    console.log('notification')
+    const {CaptureEventIds, Capture} = SocketMobile
+    if (!e) {
+        return;
+    }
+    switch (e.id) {
+        case CaptureEventIds.DeviceArrival: //detecting devices; scanner connects to companion/device
+        ...
+        break
+        case CaptureEventIds.DeviceRemoval: //removing devices; scanner connects to companion/device
+        ... 
+        break
+        case CaptureEventIds.DecodedData: //processing captured data; executed when you scan a code
+        ...
+        break
+    }
 }
 ```
-NOTE: The second argument of the `onCaptureEvent` callback is a handle to identify the source of the Capture event.
+
+We've provided some logic to handle adding devices, removing devices, scanning items and storing those scan results (and connected devices) and adding them to the DOM. Below is what your boilerplate should look like after connecting a scanner and scanning a few tags.
+
+![javascript demo](./assets/js-demo.gif)
