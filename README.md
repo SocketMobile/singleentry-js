@@ -1,6 +1,6 @@
 # SingleEntryJS
 
-SingleEntryJS is a very simple HTML and JS boilerplate app using the Socket Mobile JavaScript Capture Module.
+SingleEntryJS is a very simple HTML and JS boilerplate app using the Socket Mobile JavaScript Capture Module. If you are looking for the React project example, the repo can be found [here](https://github.com/SocketMobile/single-entry-react).
 
 It shows how to use the Socket Mobile CaptureJS SDK to receive the decoded data from the Socket Mobile devices into an input box.
 
