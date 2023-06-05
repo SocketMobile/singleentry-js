@@ -4,7 +4,7 @@ let deviceMap = {};
 let dataId = 10;
 
 let appInfo = {
-  appId: "web:socketmobile.com.singleentryjs",
+  appId: "web:socketmobile.com.test",
   developerId: "289d7d25-20ea-eb11-bacb-000d3a5b57ef",
   appKey: "MC4CFQDTXgyqNtrLf0MODRcyn2slp3K4/wIVAMe4pKxYfyqGbvVeqv46nqMcEC/P",
 };
@@ -131,7 +131,8 @@ window.addEventListener("DOMContentLoaded", () => {
           "not able to connect to the service, is it running?" + ` ${finalErr}`;
         console.log("no able to connect to the service, is it running?");
       } else {
-        val = `opening Capture error: ${finalErr}`;
+        console.log(JSON.stringify(finalErr));
+        val = `opening Capture error \n ${finalErr.code}: ${finalErr.message}`;
       }
       console.log(val);
       updateStatus(val, finalErr);
