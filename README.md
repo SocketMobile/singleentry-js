@@ -83,4 +83,16 @@ We've provided some logic to handle adding devices, removing devices, scanning i
 
 ![javascript demo](./assets/js-demo.gif)
 
+## The Live JS Demo
+
 You can check out the live JS demo [here](https://singleentry.socketmobile.dev/).
+
+### Live Demo on Mac
+
+To view the live demo on Mac, you will need to attach an Android device in order to use the Companion service. Once you connect your device, open your terminal and run `adb forward tcp:18481 tcp:18481`. You should then be able to open it in your browser!
+
+**Note**: If you are using Brave, you will first need to disable shields. You can do this by going to _Brave > Settings > Shields > Trackers & ads blocking_ and select _disable_. Once these are disabled, refresh the webpage running the live demo app and it should work normally.
+
+### Live Demo on iOS
+
+Since the companion service is not present on iOS, you will need to open the live demo in Rumba, Socket Mobile's web browser with CaptureSDK integrated into it. You can download Rumba from the App Store [here](https://apps.apple.com/us/app/rumba-by-socket-mobile/id971935166).
